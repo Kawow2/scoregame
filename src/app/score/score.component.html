@@ -1,0 +1,32 @@
+<div
+  class="w-2/5 m-4 flex flex-col items-center justify-center rounded-xl border border-gray-300 bg-white shadow-md"
+>
+  <!-- Nom de l’équipe -->
+  <h2 class="text-3xl font-bold text-blue-600 mt-6 mb-4 tracking-wide">
+    SPURS
+  </h2>
+
+  <!-- Bloc de score avec fond stylisé -->
+  <div class="w-24 h-24 flex items-center justify-center">
+    <div class="text-5xl font-extrabold text-blue-950">
+      {{ homeTeam.score }}
+    </div>
+  </div>
+</div>
+<div class="flex items-center">
+  <app-score-action-button
+    [label]="'+1'"
+    [changeScoreValue]="1"
+    [scoreTeam]="homeTeam"
+  ></app-score-action-button>
+  <app-score-action-button
+    [label]="'+2'"
+    [changeScoreValue]="2"
+    [scoreTeam]="homeTeam"
+  ></app-score-action-button>
+  <app-score-action-button
+    [label]="'+3'"
+    [changeScoreValue]="3"
+    [scoreTeam]="homeTeam"
+  ></app-score-action-button>
+</div>
