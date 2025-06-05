@@ -9,6 +9,6 @@ import { ScoreComponent } from '../score/score.component';
   styleUrl: './current-game.component.css',
 })
 export class CurrentGameComponent {
-  @Input() awayTeam: ScoreTeam;
-  @Input() homeTeam: ScoreTeam;
+  @Input() awayTeam!: ScoreTeam;
+  @Input() homeTeam!: ScoreTeam;
 }

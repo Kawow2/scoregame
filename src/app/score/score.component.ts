@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
 import { ScoreTeam } from '../models/ScoreTeam';
-import { ScoreActionsButtonsComponent } from '../score-actions-buttons/score-actions-buttons.component';
 import { ScoreActionButtonComponent } from '../score-action-button/score-action-button.component';
 
 @Component({
@@ -10,7 +9,13 @@ import { ScoreActionButtonComponent } from '../score-action-button/score-action-
   styleUrl: './score.component.css',
 })
 export class ScoreComponent {
-  @Input() homeTeam: ScoreTeam = {
+  @Input() reverseButtons: boolean = false;
+
+  get orderedButtons(): number[] {
+    const values = [1, 2, 3, -1];
+    return this.reverseButtons ? [...values].reverse() : values;
+  }
+  @Input() team: ScoreTeam = {
     score: 0,
     team: {
       name: 'Home Team',
