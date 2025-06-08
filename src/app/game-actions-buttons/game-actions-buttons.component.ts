@@ -1,11 +1,25 @@
-import { Component } from '@angular/core';
+import { Component, output, Output } from '@angular/core';
 
 @Component({
   selector: 'app-game-actions-buttons',
   imports: [],
   templateUrl: './game-actions-buttons.component.html',
-  styleUrl: './game-actions-buttons.component.css'
+  styleUrl: './game-actions-buttons.component.css',
 })
 export class GameActionsButtonsComponent {
+  onGameReset = output<void>();
+  onSaveGame = output<void>();
+  onShowHistoric = output<void>();
 
+  resetGame() {
+    this.onGameReset.emit();
+  }
+
+  saveGame() {
+    this.onSaveGame.emit();
+  }
+
+  showHistoric() {
+    this.onShowHistoric.emit();
+  }
 }

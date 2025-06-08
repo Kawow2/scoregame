@@ -11,17 +11,19 @@ import { Team } from '../models/Team';
   styleUrl: './home.component.css',
 })
 export class HomeComponent {
-  spurs: ScoreTeam = {
-    score: 0,
-    team: {
-      name: 'Spurs',
-    } as Team,
-  };
+  homeTeam = new ScoreTeam();
+  awayTeam = new ScoreTeam();
 
-  boston: ScoreTeam = {
-    score: 0,
-    team: {
-      name: 'Boston',
-    } as Team,
-  };
+  resetGame() {
+    this.homeTeam = new ScoreTeam();
+    this.awayTeam = new ScoreTeam();
+  }
+
+  saveGame() {
+    //TODO
+  }
+
+  showHistoric() {
+    //TODO
+  }
 }
