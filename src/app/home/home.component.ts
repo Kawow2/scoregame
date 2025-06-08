@@ -3,10 +3,11 @@ import { CurrentGameComponent } from '../current-game/current-game.component';
 import { GameActionsButtonsComponent } from '../game-actions-buttons/game-actions-buttons.component';
 import { ScoreTeam } from '../models/ScoreTeam';
 import { Team } from '../models/Team';
+import { TimerComponent } from '../timer/timer.component';
 
 @Component({
   selector: 'app-home',
-  imports: [CurrentGameComponent, GameActionsButtonsComponent],
+  imports: [CurrentGameComponent, GameActionsButtonsComponent, TimerComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
@@ -24,6 +25,10 @@ export class HomeComponent {
   }
 
   showHistoric() {
+    //TODO
+  }
+
+  updateTimer() {
     //TODO
   }
 }
