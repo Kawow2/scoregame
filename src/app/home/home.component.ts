@@ -4,6 +4,10 @@ import { GameActionsButtonsComponent } from '../game-actions-buttons/game-action
 import { ScoreTeam } from '../models/ScoreTeam';
 import { Team } from '../models/Team';
 import { TimerComponent } from '../timer/timer.component';
+import { GamesService } from '../../services/games.service';
+import { log } from 'console';
+import { Game } from '../models/Game';
+import { HistoricGame } from '../models/HistoricGame';
 
 @Component({
   selector: 'app-home',
@@ -12,6 +16,10 @@ import { TimerComponent } from '../timer/timer.component';
   styleUrl: './home.component.css',
 })
 export class HomeComponent {
+  /**
+   *
+   */
+  constructor(private readonly gameService: GamesService) {}
   homeTeam = new ScoreTeam();
   awayTeam = new ScoreTeam();
 
@@ -21,11 +29,12 @@ export class HomeComponent {
   }
 
   saveGame() {
-    //TODO
+    const game = new HistoricGame(this.homeTeam, this.awayTeam);
+    this.gameService.save(game);
   }
 
   showHistoric() {
-    //TODO
+    let historicalGames = this.gameService.getHistoric();
   }
 
   updateTimer() {

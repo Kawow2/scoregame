@@ -1,6 +1,14 @@
-import { Team } from './Team';
+import { ScoreTeam } from './ScoreTeam';
 
 export class Game {
-  awayTeam: Team;
-  homeTeam: Team;
+  /**
+   *
+   */
+  constructor(home: ScoreTeam, away: ScoreTeam) {
+    this.homeTeam = home;
+    this.awayTeam = away;
+  }
+
+  awayTeam: ScoreTeam;
+  homeTeam: ScoreTeam;
 }
