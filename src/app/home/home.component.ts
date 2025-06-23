@@ -2,12 +2,9 @@ import { Component } from '@angular/core';
 import { CurrentGameComponent } from '../current-game/current-game.component';
 import { GameActionsButtonsComponent } from '../game-actions-buttons/game-actions-buttons.component';
 import { ScoreTeam } from '../models/ScoreTeam';
-import { Team } from '../models/Team';
 import { TimerComponent } from '../timer/timer.component';
 import { GamesService } from '../../services/games.service';
-import { Game } from '../models/Game';
 import { HistoricGame } from '../models/HistoricGame';
-import { NgIcon, provideIcons } from '@ng-icons/core';
 import { IconsModule } from '../shared/icons.module';
 
 @Component({
@@ -17,7 +14,6 @@ import { IconsModule } from '../shared/icons.module';
     GameActionsButtonsComponent,
     TimerComponent,
     IconsModule,
-    NgIcon,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
@@ -42,9 +38,5 @@ export class HomeComponent {
 
   showHistoric() {
     let historicalGames = this.gameService.getHistoric();
-  }
-
-  updateTimer() {
-    //TODO
   }
 }

@@ -10,7 +10,6 @@ export class GameActionsButtonsComponent {
   onGameReset = output<void>();
   onSaveGame = output<void>();
   onShowHistoric = output<void>();
-  onUpdateTimer = output<void>();
 
   resetGame() {
     this.onGameReset.emit();
@@ -22,9 +21,5 @@ export class GameActionsButtonsComponent {
 
   showHistoric() {
     this.onShowHistoric.emit();
-  }
-
-  updateTimer() {
-    this.onUpdateTimer.emit();
   }
 }
