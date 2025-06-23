@@ -1,17 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { IconsModule } from '../shared/icons.module';
+import { NgIcon } from '@ng-icons/core';
 
 @Component({
   selector: 'app-timer',
   templateUrl: './timer.component.html',
-  imports: [FormsModule],
-  standalone: true,
+  imports: [FormsModule, IconsModule, NgIcon],
 })
 export class TimerComponent {
   minutes: number = 0;
   seconds: number = 0;
   timeLeft: number = 0; // en secondes
-  isRunning: boolean = false;
+  isRunning = signal(false); // Utilisation de signal pour suivre l'état du timer
   interval: any;
 
   setTime() {
@@ -20,8 +21,8 @@ export class TimerComponent {
   }
 
   start() {
-    if (this.timeLeft <= 0 || this.isRunning) return;
-    this.isRunning = true;
+    if (this.timeLeft <= 0 || this.isRunning()) return;
+    this.isRunning.set(true);
 
     this.interval = setInterval(() => {
       if (this.timeLeft > 0) {
@@ -34,7 +35,7 @@ export class TimerComponent {
 
   stop() {
     clearInterval(this.interval);
-    this.isRunning = false;
+    this.isRunning.set(false);
   }
 
   reset() {
@@ -52,5 +53,29 @@ export class TimerComponent {
 
   get displaySeconds(): string {
     return (this.timeLeft % 60).toString().padStart(2, '0');
+  }
+
+  addMinutes(value: number = 1) {
+    this.minutes += value;
+    this.checkTimeIntegrity();
+  }
+
+  addSeconds(value: number = 1) {
+    this.seconds += value;
+    this.checkTimeIntegrity();
+  }
+
+  checkTimeIntegrity() {
+    if (this.minutes < 0) {
+      this.minutes = 0;
+    }
+    if (this.seconds < 0) {
+      this.seconds = 59;
+    }
+    if (this.seconds >= 60) {
+      this.minutes += Math.floor(this.seconds / 60);
+      this.seconds = this.seconds % 60;
+    }
+    this.setTime();
   }
 }

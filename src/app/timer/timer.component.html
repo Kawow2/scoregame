@@ -1,57 +1,35 @@
-<div
-  class="flex flex-col items-center justify-center w-full p-4 rounded-md bg-white shadow-md max-w-sm mx-auto"
->
-  <!-- Choix du temps -->
-  <div class="flex gap-2 mb-4">
-    <input
-      type="number"
-      min="0"
-      max="59"
-      class="w-16 text-center border rounded p-2"
-      placeholder="MM"
-      [(ngModel)]="minutes"
-    />
-    <span class="text-xl font-semibold">:</span>
-    <input
-      type="number"
-      min="0"
-      max="59"
-      [(ngModel)]="seconds"
-      class="w-16 text-center border rounded p-2"
-      placeholder="SS"
-    />
-    <button
-      (click)="setTime()"
-      class="ml-2 bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded"
-    >
-      Valider
-    </button>
-  </div>
+<div class="flex flex-col items-center justify-center w-full p-4 rounded-md bg-white shadow-md max-w-sm mx-auto">
+    @if(!this.isRunning()) {
 
-  <!-- Affichage du timer -->
-  <div class="text-5xl font-mono font-bold mb-4">
-    {{ displayMinutes }}:{{ displaySeconds }}
-  </div>
+    <div class="w-full flex justify-center gap-12">
+        <ng-icon name="heroChevronUp" class="border border-blue-600 border-solid rounded-full hover:cursor-pointer" size="24" (click)="addMinutes()">
+        </ng-icon>
+        <ng-icon name="heroChevronUp" class="border border-blue-600 border-solid rounded-full hover:cursor-pointer" size="24" (click)="addSeconds()">
+        </ng-icon>
+    </div>
+    }
 
-  <!-- Boutons contrôle -->
-  <div class="flex gap-3">
-    <button
-      (click)="start()"
-      class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded"
-    >
+    <!-- Affichage du timer -->
+    <div class="text-5xl font-mono font-bold mb-4">
+        {{ displayMinutes }}:{{ displaySeconds }}
+    </div>
+    @if(!this.isRunning()) {
+    <div class="w-full flex justify-center gap-12">
+        <ng-icon name="heroChevronDown" class="border border-blue-600 border-solid rounded-full hover:cursor-pointer" size="24" (click)="addMinutes(-1)">
+        </ng-icon>
+        <ng-icon name="heroChevronDown" class="border border-blue-600 border-solid rounded-full hover:cursor-pointer" size="24" (click)="addSeconds(-1)">
+        </ng-icon>
+    </div>
+    }
+    <div class="flex gap-3">
+        <button (click)="start()" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded">
       Démarrer
     </button>
-    <button
-      (click)="stop()"
-      class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded"
-    >
+        <button (click)="stop()" class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded">
       Pause
     </button>
-    <button
-      (click)="reset()"
-      class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded"
-    >
+        <button (click)="reset()" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded">
       Reset
     </button>
-  </div>
+    </div>
 </div>
