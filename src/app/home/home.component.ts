@@ -7,13 +7,18 @@ import { TimerComponent } from '../timer/timer.component';
 import { GamesService } from '../../services/games.service';
 import { Game } from '../models/Game';
 import { HistoricGame } from '../models/HistoricGame';
-import { heroUsers } from '@ng-icons/heroicons/outline';
 import { NgIcon, provideIcons } from '@ng-icons/core';
+import { IconsModule } from '../shared/icons.module';
 
 @Component({
   selector: 'app-home',
-  imports: [CurrentGameComponent, GameActionsButtonsComponent, TimerComponent],
-  providers: [provideIcons({ heroUsers })],
+  imports: [
+    CurrentGameComponent,
+    GameActionsButtonsComponent,
+    TimerComponent,
+    IconsModule,
+    NgIcon,
+  ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
