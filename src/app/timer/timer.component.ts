@@ -5,6 +5,7 @@ import { NgIcon } from '@ng-icons/core';
 
 @Component({
   selector: 'app-timer',
+  standalone: true,
   templateUrl: './timer.component.html',
   imports: [FormsModule, IconsModule, NgIcon],
 })

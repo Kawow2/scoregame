@@ -4,6 +4,7 @@ import { ScoreComponent } from '../score/score.component';
 
 @Component({
   selector: 'app-current-game',
+  standalone: true,
   imports: [ScoreComponent],
   templateUrl: './current-game.component.html',
   styleUrl: './current-game.component.css',

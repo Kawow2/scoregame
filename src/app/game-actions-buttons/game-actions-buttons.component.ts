@@ -2,6 +2,7 @@ import { Component, output, Output } from '@angular/core';
 
 @Component({
   selector: 'app-game-actions-buttons',
+  standalone: true,
   imports: [],
   templateUrl: './game-actions-buttons.component.html',
   styleUrl: './game-actions-buttons.component.css',

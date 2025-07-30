@@ -4,6 +4,7 @@ import { ScoreActionButtonComponent } from '../score-action-button/score-action-
 
 @Component({
   selector: 'app-score',
+  standalone: true,
   imports: [ScoreActionButtonComponent],
   templateUrl: './score.component.html',
   styleUrl: './score.component.css',

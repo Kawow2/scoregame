@@ -3,6 +3,7 @@ import { ScoreTeam } from '../models/ScoreTeam';
 
 @Component({
   selector: 'app-score-action-button',
+  standalone: true,
   imports: [],
   templateUrl: './score-action-button.component.html',
   styleUrl: './score-action-button.component.css',
