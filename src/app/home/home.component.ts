@@ -9,6 +9,7 @@ import { IconsModule } from '../shared/icons.module';
 
 @Component({
   selector: 'app-home',
+  standalone: true,
   imports: [
     CurrentGameComponent,
     GameActionsButtonsComponent,
