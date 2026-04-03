@@ -1,0 +1,167 @@
+@if (tournament(); as t) {
+  <div class="min-h-screen bg-gray-50 p-4">
+    <!-- Header -->
+    <div class="max-w-2xl mx-auto mb-4 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <button
+          (click)="goBack()"
+          class="text-gray-400 hover:text-gray-600 p-1"
+          title="Back to tournaments"
+        >
+          <ng-icon name="heroArrowLeft" size="22"></ng-icon>
+        </button>
+        <div class="flex items-center gap-2">
+          <ng-icon name="heroTrophy" class="text-yellow-500" size="24"></ng-icon>
+          <h1 class="text-xl font-bold text-gray-800">{{ t.name }}</h1>
+        </div>
+      </div>
+      <div class="flex gap-2">
+        <button
+          (click)="openGameSelect()"
+          class="flex items-center gap-1 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-semibold shadow"
+        >
+          <ng-icon name="heroPlay" size="16"></ng-icon>
+          New Game
+        </button>
+        <button
+          (click)="confirmDelete()"
+          class="flex items-center gap-1 bg-gray-200 hover:bg-red-100 hover:text-red-500 text-gray-500 px-3 py-2 rounded-lg"
+          title="Delete tournament"
+        >
+          <ng-icon name="heroTrash" size="16"></ng-icon>
+        </button>
+      </div>
+    </div>
+
+    <!-- Points config badge -->
+    @if (pointsConfig(); as cfg) {
+      <div class="max-w-2xl mx-auto mb-4 flex gap-3 text-sm text-gray-500">
+        <span class="bg-green-100 text-green-700 px-2 py-0.5 rounded-full">Win: {{ cfg.win }} pts</span>
+        <span class="bg-yellow-100 text-yellow-700 px-2 py-0.5 rounded-full">Draw: {{ cfg.draw }} pts</span>
+        <span class="bg-red-100 text-red-700 px-2 py-0.5 rounded-full">Loss: {{ cfg.loss }} pts</span>
+      </div>
+    }
+
+    <!-- Standings Table -->
+    <div class="max-w-2xl mx-auto bg-white rounded-xl shadow-md overflow-hidden mb-6">
+      <table class="w-full text-sm">
+        <thead class="bg-blue-600 text-white text-left">
+          <tr>
+            <th class="px-4 py-3 w-10">#</th>
+            <th class="px-4 py-3">Team</th>
+            <th class="px-3 py-3 text-center">GP</th>
+            <th class="px-3 py-3 text-center">W</th>
+            <th class="px-3 py-3 text-center">D</th>
+            <th class="px-3 py-3 text-center">L</th>
+            <th class="px-3 py-3 text-center font-bold">PTS</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (team of rankedTeams(); track team.id; let i = $index) {
+            <tr class="border-t border-gray-100" [class.bg-blue-50]="i === 0">
+              <td class="px-4 py-3 text-center text-lg">{{ rankLabel(i) }}</td>
+              <td class="px-4 py-3 font-semibold text-gray-800">{{ team.name }}</td>
+              <td class="px-3 py-3 text-center text-gray-500">{{ team.gamesPlayed }}</td>
+              <td class="px-3 py-3 text-center text-green-600 font-medium">{{ team.wins }}</td>
+              <td class="px-3 py-3 text-center text-yellow-600 font-medium">{{ team.draws }}</td>
+              <td class="px-3 py-3 text-center text-red-500 font-medium">{{ team.losses }}</td>
+              <td class="px-3 py-3 text-center font-bold text-blue-700 text-base">{{ team.points }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Game History -->
+    @if (gameHistory().length > 0) {
+      <div class="max-w-2xl mx-auto bg-white rounded-xl shadow-md p-4">
+        <h2 class="text-lg font-semibold text-gray-700 mb-3">Game History</h2>
+        <div class="space-y-2">
+          @for (game of gameHistory(); track game.id) {
+            <div class="flex items-center justify-between text-sm bg-gray-50 rounded-lg px-4 py-2">
+              <span class="font-medium text-gray-700 flex-1">{{ game.homeTeamName }}</span>
+              <span class="font-bold text-gray-800 mx-3 text-base">
+                {{ game.homeScore }} – {{ game.awayScore }}
+              </span>
+              <span class="font-medium text-gray-700 flex-1 text-right">{{ game.awayTeamName }}</span>
+              <span class="text-gray-400 text-xs ml-4">{{ formatDate(game.date) }}</span>
+            </div>
+          }
+        </div>
+      </div>
+    }
+  </div>
+
+  <!-- Game Selection Overlay -->
+  @if (selectingGame()) {
+    <div class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+      <div class="bg-white rounded-2xl shadow-xl p-6 w-full max-w-sm">
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="text-xl font-bold text-gray-800">Select Teams</h2>
+          <button (click)="cancelGameSelect()" class="text-gray-400 hover:text-gray-600">
+            <ng-icon name="heroXMark" size="22"></ng-icon>
+          </button>
+        </div>
+
+        <label class="block text-sm font-semibold text-gray-600 mb-1">Home Team</label>
+        <select
+          [value]="selectedHomeId()"
+          (change)="selectedHomeId.set($any($event.target).value)"
+          class="w-full border border-gray-300 rounded-lg px-3 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-400"
+        >
+          <option value="">-- Select --</option>
+          @for (team of availableHomeTeams(teams()); track team.id) {
+            <option [value]="team.id">{{ team.name }}</option>
+          }
+        </select>
+
+        <label class="block text-sm font-semibold text-gray-600 mb-1">Away Team</label>
+        <select
+          [value]="selectedAwayId()"
+          (change)="selectedAwayId.set($any($event.target).value)"
+          class="w-full border border-gray-300 rounded-lg px-3 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-400"
+        >
+          <option value="">-- Select --</option>
+          @for (team of availableAwayTeams(teams()); track team.id) {
+            <option [value]="team.id">{{ team.name }}</option>
+          }
+        </select>
+
+        @if (gameSelectError()) {
+          <p class="text-red-500 text-sm mb-3">{{ gameSelectError() }}</p>
+        }
+
+        <button
+          (click)="launchGame()"
+          class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl"
+        >
+          Start Game
+        </button>
+      </div>
+    </div>
+  }
+
+  <!-- Delete Confirm Dialog -->
+  @if (showDeleteConfirm()) {
+    <div class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+      <div class="bg-white rounded-2xl shadow-xl p-6 w-full max-w-sm text-center">
+        <h2 class="text-xl font-bold text-gray-800 mb-2">Delete Tournament?</h2>
+        <p class="text-gray-500 text-sm mb-6">All scores and history will be permanently deleted.</p>
+        <div class="flex gap-3">
+          <button
+            (click)="cancelDelete()"
+            class="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold py-2 rounded-lg"
+          >
+            Cancel
+          </button>
+          <button
+            (click)="doDelete()"
+            class="flex-1 bg-red-500 hover:bg-red-600 text-white font-semibold py-2 rounded-lg"
+          >
+            Delete
+          </button>
+        </div>
+      </div>
+    </div>
+  }
+}

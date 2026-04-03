@@ -1,0 +1,104 @@
+<div class="min-h-screen bg-gray-50 flex items-start justify-center p-6">
+  <div class="w-full max-w-lg">
+    <!-- Back button -->
+    <button
+      (click)="goBack()"
+      class="flex items-center gap-1 text-gray-400 hover:text-gray-600 mb-4 text-sm"
+    >
+      <ng-icon name="heroArrowLeft" size="16"></ng-icon>
+      Back to tournaments
+    </button>
+
+    <h1 class="text-3xl font-bold text-blue-700 mb-6 text-center">New Tournament</h1>
+
+    <!-- Tournament Name -->
+    <div class="bg-white rounded-xl shadow-md p-6 mb-4">
+      <label class="block text-sm font-semibold text-gray-600 mb-1">Tournament Name</label>
+      <input
+        [(ngModel)]="tournamentName"
+        type="text"
+        placeholder="e.g. Spring Championship"
+        class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+      />
+    </div>
+
+    <!-- Points Config -->
+    <div class="bg-white rounded-xl shadow-md p-6 mb-4">
+      <h2 class="text-lg font-semibold text-gray-700 mb-3">Points Allocation</h2>
+      <div class="flex gap-4">
+        <div class="flex-1">
+          <label class="block text-sm text-gray-500 mb-1">Win</label>
+          <input
+            [(ngModel)]="winPoints"
+            type="number"
+            min="0"
+            class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          />
+        </div>
+        <div class="flex-1">
+          <label class="block text-sm text-gray-500 mb-1">Draw</label>
+          <input
+            [(ngModel)]="drawPoints"
+            type="number"
+            min="0"
+            class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          />
+        </div>
+        <div class="flex-1">
+          <label class="block text-sm text-gray-500 mb-1">Loss</label>
+          <input
+            [(ngModel)]="lossPoints"
+            type="number"
+            min="0"
+            class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- Teams -->
+    <div class="bg-white rounded-xl shadow-md p-6 mb-4">
+      <div class="flex items-center justify-between mb-3">
+        <h2 class="text-lg font-semibold text-gray-700">
+          Teams
+          <span class="text-sm font-normal text-gray-400">(min. 3)</span>
+        </h2>
+        <button
+          (click)="addTeam()"
+          class="flex items-center gap-1 text-blue-600 hover:text-blue-800 text-sm font-medium"
+        >
+          <ng-icon name="heroPlusCircle" size="18"></ng-icon>
+          Add Team
+        </button>
+      </div>
+
+      @for (team of teamNames; track $index) {
+        <div class="flex items-center gap-2 mb-2">
+          <span class="text-sm text-gray-400 w-6 text-right">{{ $index + 1 }}.</span>
+          <input
+            [(ngModel)]="teamNames[$index]"
+            type="text"
+            placeholder="Team name"
+            class="flex-1 border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          />
+          @if (teamNames.length > 3) {
+            <button (click)="removeTeam($index)" class="text-red-400 hover:text-red-600">
+              <ng-icon name="heroXMark" size="20"></ng-icon>
+            </button>
+          }
+        </div>
+      }
+    </div>
+
+    @if (errorMessage) {
+      <p class="text-red-500 text-sm text-center mb-3">{{ errorMessage }}</p>
+    }
+
+    <button
+      (click)="create()"
+      class="w-full bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white font-bold py-3 rounded-xl shadow-md text-lg"
+    >
+      Create Tournament
+    </button>
+  </div>
+</div>
